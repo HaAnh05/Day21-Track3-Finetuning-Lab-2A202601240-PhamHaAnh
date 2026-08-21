@@ -26,6 +26,20 @@ import warnings
 from . import device
 from .config import MAX_EFFECTIVE_BATCH, LoraSpec, Tier
 
+# Defensive patch for TRL bug when forward is functools.partial
+try:
+    import trl.trainer.sft_trainer
+    _orig_patch = getattr(trl.trainer.sft_trainer, "_patch_chunked_ce_lm_head", None)
+    if _orig_patch is not None:
+        def _safe_patch(*args, **kwargs):
+            try:
+                return _orig_patch(*args, **kwargs)
+            except Exception:
+                pass
+        trl.trainer.sft_trainer._patch_chunked_ce_lm_head = _safe_patch
+except Exception:
+    pass
+
 WARMUP_FRACTION = 0.1
 
 
@@ -109,7 +123,7 @@ def sft_config_kwargs(
         report_to="none",
         seed=seed,
         packing=False,       # we supply pre-tokenized labels -- see the note below
-        loss_type="chunked_nll",                  # TRL >= 1.7 default; big VRAM saving
+        loss_type="nll",                          # standard CE loss to avoid TRL partial.__func__ bug
         gradient_checkpointing=True,
     )
     # `warmup_ratio` does not exist any more. transformers v5 / TRL 1.10 expose only

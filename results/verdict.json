@@ -1,0 +1,38 @@
+{
+  "comparison": [
+    {
+      "run": "(a) base + naive prompt",
+      "target": 0.0,
+      "regression": 0.7578,
+      "format": 0.0,
+      "latency_ms": 3508.9,
+      "n": 50
+    },
+    {
+      "run": "(b) base + optimized prompt",
+      "target": 0.765,
+      "regression": 0.7578,
+      "format": 1.0,
+      "latency_ms": 1112.3,
+      "n": 50
+    },
+    {
+      "run": "(c) LoRA fine-tune",
+      "target": 0.0,
+      "regression": 0.0,
+      "format": 0.0,
+      "latency_ms": 5901.9,
+      "n": 50
+    }
+  ],
+  "verdict": {
+    "passed": false,
+    "reasons": [
+      "target task did not beat the optimized-prompt baseline (0.000 vs 0.765, delta -0.765). A fine-tune that loses to a better prompt is not a fine-tune you should ship.",
+      "general capability regressed by 0.758 (tolerance 0.020). See deck §14.3 — add 1-5% replay data."
+    ],
+    "target_delta": -0.765,
+    "regression_delta": -0.7577777777777778
+  },
+  "valid_trace_rate": 0.0
+}

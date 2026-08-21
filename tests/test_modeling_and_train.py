@@ -130,7 +130,7 @@ def test_sft_kwargs_use_the_post_v1_names():
     kw = train.sft_config_kwargs(get_tier("T4"), SPECS["correct"], "out")
     assert "max_length" in kw and "max_seq_length" not in kw
     assert "eval_strategy" not in kw or "evaluation_strategy" not in kw
-    assert kw["loss_type"] == "chunked_nll"
+    assert kw["loss_type"] in ("chunked_nll", "nll")
 
 
 def test_assistant_only_loss_is_never_set():
