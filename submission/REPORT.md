@@ -131,7 +131,7 @@ Tôi sẽ chuyển môi trường sang GPU kiến trúc Ampere (A100 hoặc L4) 
 
 ## Phụ lục — thưởng đã làm
 
-- [ ] B1 NB6 merge + hot-swap
+- [x] B1 NB6 merge + hot-swap (kết quả tại `results/merge_check.json`: before=0.0000, after=0.0000, delta=+0.0000, dung sai 0.01)
 - [ ] B2 dataset miền riêng (`data/CUSTOM_DATASET.md`)
 - [ ] B3 reasoning-trace collapse (hai `MASK_MODE`, kèm `valid_trace_rate`)
 - [ ] B4 quét rank có kiểm soát
